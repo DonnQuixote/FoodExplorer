@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5799346229830705123}
   - component: {fileID: 8875848713028188739}
-  m_Layer: 0
+  - component: {fileID: 2751701055872737167}
+  m_Layer: 7
   m_Name: Tomato
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,6 +47,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kitchenObjectsSO: {fileID: 11400000, guid: 444192e974d71cd44b17a00e054a170b, type: 2}
+--- !u!65 &2751701055872737167
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 339733020625766737}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5636116, y: 0.6070191, z: 0.653034}
+  m_Center: {x: -0.04632286, y: 0.30218443, z: 0.000024318695}
 --- !u!1001 &1646598608516393743
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -5,33 +5,76 @@ using UnityEngine;
 public class KitchenObject : MonoBehaviour
 {
     [SerializeField] KitchenObjectsSO kitchenObjectsSO;
-    private ClearCount clearCount;
+    private IKitchenObjectParent kitchenObjectParent;
+    public Quaternion origionRatatoin;
+    private void Awake()
+    {
+        origionRatatoin = transform.rotation;
+    }
 
     public KitchenObjectsSO GetKitchenObjectsSO()
     {
         return kitchenObjectsSO;
     }
 
-    public ClearCount GetCleatCount()
+    public IKitchenObjectParent GetCleatCount()
     {
-        return clearCount;
+        return kitchenObjectParent;
     }
 
-    public void SetCleatCount(ClearCount clearCount)
+    public void SetKitchenObjectParent(IKitchenObjectParent kitchenObjectParent)
     {
-        if(this.clearCount != null)
+        if(this.kitchenObjectParent != null)
         {
-            this.clearCount.ClearKitchenObject();
+            this.kitchenObjectParent.ClearKitchenObject();
         }
-        this.clearCount = clearCount;
+        this.kitchenObjectParent = kitchenObjectParent;
 
-        if (clearCount.HasKitchenObject())
+        if (kitchenObjectParent.HasKitchenObject())
         {
-            Debug.LogError("已经存在一个KitchenObject,柜台上存在物体");
+            kitchenObjectParent.ClearKitchenObject();
         }
-        clearCount.SetKitchenObject(this);
-
-        transform.parent = clearCount.GetKitchenObjectFollowTransform();
+        kitchenObjectParent.SetKitchenObject(this);
+        //Debug.Log(GetCleatCount());
+        transform.parent = kitchenObjectParent.GetKitchenObjectFollowTransform();
+        transform.localScale = Vector3.one;
         transform.localPosition = Vector3.zero;
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<KitchenObject>())
+        {
+            Debug.Log("OnCollisionEnter:  " + collision.gameObject.name);
+            
+        }
+    }
+    public void DestroySelf()
+    {
+        kitchenObjectParent.SetKitchenObject(null);
+        Destroy(gameObject);
+    }
+
+    public static KitchenObject SpawnKitchenObject(KitchenObjectsSO kitchenObjectsSO,IKitchenObjectParent parent)
+    {
+        Transform kitchenObjectTransform = Instantiate(kitchenObjectsSO.prefab);
+        KitchenObject tempKitchenObjectsSO = kitchenObjectTransform.GetComponent<KitchenObject>();
+        tempKitchenObjectsSO.SetKitchenObjectParent(parent);
+        return tempKitchenObjectsSO;
+    }
+
+    public bool TryGetPlate(out PlateKitchenObject plateKitchenObject)
+    {
+        if(this is PlateKitchenObject)
+        {
+            plateKitchenObject = this as PlateKitchenObject;
+            return true;
+        }
+        else
+        {
+            plateKitchenObject = null;
+            return false;
+        }
+    }
+
 }

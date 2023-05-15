@@ -5,11 +5,11 @@ using UnityEngine;
 public class PlayerAnimator : MonoBehaviour
 {
     Animator animator;
-    private const string IS_WALKING = "IsWalking";
+    private const string IS_WALKING = "IsWalkingIn";
     [SerializeField]Player player;
     private void Awake()
     {
-        animator = FindObjectOfType<Animator>();
+        animator = GetComponent<Animator>();
         player = FindObjectOfType<Player>();
     }
 
